@@ -4,7 +4,9 @@ export interface Quest {
     description: string
     duration: number
     rewards: {
-        gold: number
-        gearIds: string[]
+        gold?: number
+        weaponIds?: string[]
+        gearIds?: string[]
+        experience?: number
     } 
 }
