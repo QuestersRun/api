@@ -1,0 +1,135 @@
+---
+swagger: "2.0"
+info:
+  description: "This is an example of using OAuth2 Password Flow in a specification\
+    \ to describe security to your API."
+  version: "1.0.0"
+  title: "Sample Password Flow OAuth2 Project"
+host: "virtserver.swaggerhub.com"
+basePath: "/TheGrind/QuestersRun/1.0.0"
+schemes:
+- "https"
+security:
+- password:
+  - "read"
+  - "write"
+paths:
+  /character:
+    get:
+      summary: "Get character info"
+      description: "This is an example operation to show how security is applied to\
+        \ the call."
+      operationId: "characterGET"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+      x-swagger-router-controller: "Default"
+    post:
+      summary: "Post Character info"
+      description: "Post Character info"
+      operationId: "characterPOST"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "The user to create."
+        required: false
+        schema:
+          $ref: "#/definitions/user"
+      responses:
+        "201":
+          description: "Created"
+      x-swagger-router-controller: "Default"
+  /ping:
+    get:
+      summary: "Server heartbeat operation"
+      description: "This operation shows how to override the global security defined\
+        \ above, as we want to open it up for all users."
+      operationId: "pingGET"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+      security: []
+      x-swagger-router-controller: "Default"
+  /users:
+    get:
+      summary: "gets a new user."
+      operationId: "usersGET"
+      parameters:
+      - in: "body"
+        name: "id"
+        description: "The user to create."
+        required: false
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "OK"
+      x-swagger-router-controller: "Default"
+    post:
+      summary: "Creates a new user."
+      operationId: "usersPOST"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "The user to create."
+        required: false
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "OK"
+      x-swagger-router-controller: "Default"
+securityDefinitions:
+  password:
+    type: "oauth2"
+    tokenUrl: "http://example.com/oauth/token"
+    flow: "password"
+    scopes:
+      write: "allows modifying resources"
+      read: "allows reading resources"
+definitions:
+  User:
+    type: "object"
+    required:
+    - "userName"
+    properties:
+      userName:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+    example:
+      firstName: "firstName"
+      lastName: "lastName"
+      userName: "userName"
+  Character:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+      raceId:
+        type: "string"
+      name:
+        type: "string"
+      experience:
+        type: "string"
+      stats:
+        type: "string"
+  user:
+    type: "object"
+    required:
+    - "userName"
+    properties:
+      userName:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
